@@ -1,0 +1,27 @@
+{
+    "gender":"male",
+    "name":{
+        "title":"mr",
+        "first":"karol",
+        "last":"hesjedal"
+    },
+     "location":{
+        "street":"frognerveien 1645",
+        "city":"harpefoss",
+        "state":"akershus",
+        "postcode":4358,
+        "coordinates":{
+            "latitude":"57.0308",
+            "longitude":"-175.9867"
+        }
+    },
+    "email":"karol.hesjedal@example.com",
+    "age":66,
+    "picture":{
+        "large":"https://randomuser.me/api/portraits/men/29.jpg",
+        "medium":"https://randomuser.me/api/portraits/med/men/29.jpg",
+        "thumbnail":"https://randomuser.me/api/portraits/thumb/men/29.jpg"
+    },
+    "nat":"NO"
+
+}

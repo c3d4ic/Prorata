@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -20,8 +20,10 @@
 		53BDF7412673F69800B0A8C4 /* Expense.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BDF7402673F69800B0A8C4 /* Expense.swift */; };
 		53BDF744267A3D5A00B0A8C4 /* BudgetVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BDF743267A3D5A00B0A8C4 /* BudgetVM.swift */; };
 		53BDF748267A428100B0A8C4 /* UIImageCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53BDF747267A428100B0A8C4 /* UIImageCircle.swift */; };
-		53F83E4D268B60E800E501F1 /* SessionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53F83E4B268B60E800E501F1 /* SessionCollectionViewCell.swift */; };
-		53F83E4E268B60E800E501F1 /* SessionCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53F83E4C268B60E800E501F1 /* SessionCollectionViewCell.xib */; };
+		53D3BEBA268CB6320002EA0F /* budget.json in Resources */ = {isa = PBXBuildFile; fileRef = 53D3BEB9268CB6320002EA0F /* budget.json */; };
+		53D3BEC9268DFEC40002EA0F /* JsonFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D3BEC8268DFEC40002EA0F /* JsonFormatter.swift */; };
+		53D3BECD268E09750002EA0F /* BudgetCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D3BECC268E09750002EA0F /* BudgetCollectionViewCell.swift */; };
+		53D3BED0268E126C0002EA0F /* ImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D3BECF268E126C0002EA0F /* ImageExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,8 +41,10 @@
 		53BDF7402673F69800B0A8C4 /* Expense.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Expense.swift; sourceTree = "<group>"; };
 		53BDF743267A3D5A00B0A8C4 /* BudgetVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetVM.swift; sourceTree = "<group>"; };
 		53BDF747267A428100B0A8C4 /* UIImageCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageCircle.swift; sourceTree = "<group>"; };
-		53F83E4B268B60E800E501F1 /* SessionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionCollectionViewCell.swift; sourceTree = "<group>"; };
-		53F83E4C268B60E800E501F1 /* SessionCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SessionCollectionViewCell.xib; sourceTree = "<group>"; };
+		53D3BEB9268CB6320002EA0F /* budget.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = budget.json; sourceTree = "<group>"; };
+		53D3BEC8268DFEC40002EA0F /* JsonFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonFormatter.swift; sourceTree = "<group>"; };
+		53D3BECC268E09750002EA0F /* BudgetCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetCollectionViewCell.swift; sourceTree = "<group>"; };
+		53D3BECF268E126C0002EA0F /* ImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageExtension.swift; sourceTree = "<group>"; };
 		6AFF956C12704E5E795CB925 /* Pods-Prorata.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Prorata.release.xcconfig"; path = "Target Support Files/Pods-Prorata/Pods-Prorata.release.xcconfig"; sourceTree = "<group>"; };
 		8B2A0481C5089DB074F32C00 /* Pods-Prorata.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Prorata.debug.xcconfig"; path = "Target Support Files/Pods-Prorata/Pods-Prorata.debug.xcconfig"; sourceTree = "<group>"; };
 		D2D8302A9D7950A497503BEE /* Pods_Prorata.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Prorata.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -64,7 +68,6 @@
 				8B2A0481C5089DB074F32C00 /* Pods-Prorata.debug.xcconfig */,
 				6AFF956C12704E5E795CB925 /* Pods-Prorata.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -89,12 +92,12 @@
 		53BDF71D2673DC0800B0A8C4 /* Prorata */ = {
 			isa = PBXGroup;
 			children = (
+				53D3BEB8268CB6160002EA0F /* Ressources */,
 				53BDF7332673DD8900B0A8C4 /* Model */,
 				53BDF7342673DD9600B0A8C4 /* View */,
 				53BDF7352673DDA000B0A8C4 /* View Model */,
 				53BDF71E2673DC0800B0A8C4 /* AppDelegate.swift */,
 				53BDF7202673DC0800B0A8C4 /* SceneDelegate.swift */,
-				53BDF7222673DC0800B0A8C4 /* ViewController.swift */,
 				53BDF7242673DC0800B0A8C4 /* Main.storyboard */,
 				53BDF7272673DC0900B0A8C4 /* Assets.xcassets */,
 				53BDF7292673DC0900B0A8C4 /* LaunchScreen.storyboard */,
@@ -110,6 +113,8 @@
 				53BDF73A2673E17A00B0A8C4 /* Budget.swift */,
 				53BDF73D2673F3E900B0A8C4 /* UserBudget.swift */,
 				53BDF7402673F69800B0A8C4 /* Expense.swift */,
+				53D3BEC8268DFEC40002EA0F /* JsonFormatter.swift */,
+				53D3BECF268E126C0002EA0F /* ImageExtension.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -117,8 +122,9 @@
 		53BDF7342673DD9600B0A8C4 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				53F83E48268B604100E501F1 /* CustomViews */,
+				53BDF7222673DC0800B0A8C4 /* ViewController.swift */,
 				53BDF747267A428100B0A8C4 /* UIImageCircle.swift */,
+				53D3BECC268E09750002EA0F /* BudgetCollectionViewCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -131,29 +137,12 @@
 			path = "View Model";
 			sourceTree = "<group>";
 		};
-		53F83E48268B604100E501F1 /* CustomViews */ = {
+		53D3BEB8268CB6160002EA0F /* Ressources */ = {
 			isa = PBXGroup;
 			children = (
-				53F83E49268B605800E501F1 /* CollectionViewCells */,
+				53D3BEB9268CB6320002EA0F /* budget.json */,
 			);
-			name = CustomViews;
-			sourceTree = "<group>";
-		};
-		53F83E49268B605800E501F1 /* CollectionViewCells */ = {
-			isa = PBXGroup;
-			children = (
-				53F83E4A268B609E00E501F1 /* SessionCollectionViewCells */,
-			);
-			name = CollectionViewCells;
-			sourceTree = "<group>";
-		};
-		53F83E4A268B609E00E501F1 /* SessionCollectionViewCells */ = {
-			isa = PBXGroup;
-			children = (
-				53F83E4B268B60E800E501F1 /* SessionCollectionViewCell.swift */,
-				53F83E4C268B60E800E501F1 /* SessionCollectionViewCell.xib */,
-			);
-			name = SessionCollectionViewCells;
+			path = Ressources;
 			sourceTree = "<group>";
 		};
 		D8613974B7E84352EF83C757 /* Frameworks */ = {
@@ -224,8 +213,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				53BDF72B2673DC0900B0A8C4 /* LaunchScreen.storyboard in Resources */,
-				53F83E4E268B60E800E501F1 /* SessionCollectionViewCell.xib in Resources */,
 				53BDF7282673DC0900B0A8C4 /* Assets.xcassets in Resources */,
+				53D3BEBA268CB6320002EA0F /* budget.json in Resources */,
 				53BDF7262673DC0800B0A8C4 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -284,7 +273,9 @@
 				53BDF7372673DF3400B0A8C4 /* User.swift in Sources */,
 				53BDF73E2673F3E900B0A8C4 /* UserBudget.swift in Sources */,
 				53BDF7232673DC0800B0A8C4 /* ViewController.swift in Sources */,
-				53F83E4D268B60E800E501F1 /* SessionCollectionViewCell.swift in Sources */,
+				53D3BEC9268DFEC40002EA0F /* JsonFormatter.swift in Sources */,
+				53D3BECD268E09750002EA0F /* BudgetCollectionViewCell.swift in Sources */,
+				53D3BED0268E126C0002EA0F /* ImageExtension.swift in Sources */,
 				53BDF73B2673E17A00B0A8C4 /* Budget.swift in Sources */,
 				53BDF71F2673DC0800B0A8C4 /* AppDelegate.swift in Sources */,
 				53BDF7212673DC0800B0A8C4 /* SceneDelegate.swift in Sources */,

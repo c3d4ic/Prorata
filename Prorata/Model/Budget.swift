@@ -7,13 +7,11 @@
 
 import Foundation
 
-struct Budget {
+struct Budget : Decodable {
     var userBudget: [UserBudget]
     var expenses: [Expense]
     var total: Double
-//     {
-//        return expenses.reduce(function(a,b){return a.pay + b.pay}, +)
-//    }
     var title: String
     var picture: Picture
 }
+

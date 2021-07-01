@@ -7,8 +7,7 @@
 
 import Foundation
 
-struct UserBudget {
+struct UserBudget : Decodable {
     var user: User
-    var contribution: Name
     var pay: Double
 }

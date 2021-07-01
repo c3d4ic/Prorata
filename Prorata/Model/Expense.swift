@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Expense {
-    var contribution: Name
+struct Expense : Decodable {
+    var contribution: String
     var pay: Double
 }
