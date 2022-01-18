@@ -8,7 +8,7 @@
 import Foundation
 
 struct Session {
-//    var participants: [Participant]
-//    var expenses: [Expense]
+    var participants: [Participant]?
+    var expenses: [Expense]?
     var title: String
 }
