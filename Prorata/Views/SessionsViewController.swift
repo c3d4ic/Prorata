@@ -26,12 +26,14 @@ class SessionsViewController: UIViewController {
                     textField.returnKeyType = .continue
                 }
                 alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action:UIAlertAction) in
-                    guard let textField =  alert.textFields?.first else {
-                      
+                    guard let textFields = alert.textFields,
+                          textFields.count >= 1,
+                          let title = textFields.first?.text
+                    else {
                         return
                     }
-                    
-                    let session = Session(title: textField.text!)
+                                        
+                    let session: Session = .init(participants: [], expenses: [], title: title)
                     self.sessions.append(session)
                     self.SessionTableView.reloadData()
                     
@@ -39,30 +41,31 @@ class SessionsViewController: UIViewController {
                 alert.addAction(UIAlertAction(title: "Annuler", style: .cancel, handler: nil))
 
                 self.present(alert, animated: true, completion: nil)
-        
-//         let alert = UIAlertController(title: "Alert", message: "Veuillez renseigner le nom de la session", preferredStyle: .alert)
-//
-//        alert.addTextField { field in
-//            field.placeholder = "Janvier 2022"
-//            field.returnKeyType = .continue
-//        }
-//        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-//
-//        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert] (_) in
-//            let textField = alert.textFields![0] //Force unwrapping because we know it exists.
-//            print("Text field: \(textField.text)")
-//        }))
-//
-//        alert.addAction(UIAlertAction(title: "Continue", style: .default, handler: addSession))
-//         present(alert, animated: true)
      }
-    
-    private func addSession(alert: UIAlertAction) {
-        // JE DOIS RECCUPERER LE TEXT FIELD DE L'ALERT ET L'AJOUTER DANS LE TABLE VIEW
-    }
-     
+   
+      
     @IBAction func addSession(_ sender: Any) {
         showAlert()
+    }
+    
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if segue.identifier == "detailpop", let next = segue.destination as?
+//            DetailSessionViewController {
+//            next.session = sender as? Session
+//        }
+//    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "detailpop" {
+            if let destination = segue.destination as? DetailSessionViewController {
+                if let data = sender as? Session {
+                    destination.session = data
+                } else {
+                    fatalError("Pas de session trouvé");
+                }
+                
+            }
+        }
     }
     
 }
@@ -80,5 +83,7 @@ extension SessionsViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "detailpop", sender: sessions[indexPath.item])
+    }
 }
