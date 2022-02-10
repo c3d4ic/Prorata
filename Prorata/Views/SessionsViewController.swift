@@ -9,13 +9,13 @@ import UIKit
 
 class SessionsViewController: UIViewController {
 
-    @IBOutlet weak var SessionTableView: UITableView!
+    @IBOutlet weak var sessionTableView: UITableView!
     var sessions: [Session] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        SessionTableView.delegate = self
-        SessionTableView.dataSource = self
+        sessionTableView.delegate = self
+        sessionTableView.dataSource = self
     }
     
     private func showAlert() {
@@ -33,9 +33,10 @@ class SessionsViewController: UIViewController {
                         return
                     }
                                         
-                    let session: Session = .init(participants: [], expenses: [], title: title)
+                    
+                    let session = Session(participants: [], expenses: [], title: title)
                     self.sessions.append(session)
-                    self.SessionTableView.reloadData()
+                    self.sessionTableView.reloadData()
                     
                 }))
                 alert.addAction(UIAlertAction(title: "Annuler", style: .cancel, handler: nil))
@@ -48,12 +49,6 @@ class SessionsViewController: UIViewController {
         showAlert()
     }
     
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == "detailpop", let next = segue.destination as?
-//            DetailSessionViewController {
-//            next.session = sender as? Session
-//        }
-//    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "detailpop" {

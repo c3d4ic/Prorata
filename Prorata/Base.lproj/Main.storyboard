@@ -129,9 +129,8 @@
                     </view>
                     <navigationItem key="navigationItem" id="FBz-XF-VBH"/>
                     <connections>
-                        <outlet property="ParticipantTableView" destination="Cci-yb-Ob4" id="mA5-Tr-PNb"/>
+                        <outlet property="DetailTableView" destination="Cci-yb-Ob4" id="Ux7-jf-nZj"/>
                         <outlet property="SegmentControl" destination="eOE-y4-6YE" id="eyz-x3-exg"/>
-                        <outlet property="participantTableView" destination="Cci-yb-Ob4" id="3gJ-es-nsD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qMI-Gw-jsL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

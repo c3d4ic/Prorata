@@ -10,4 +10,6 @@ import Foundation
 struct Participant {
     var name: String
     var pay: Double
+    var owe: Double
+    var percent: Double
 }
