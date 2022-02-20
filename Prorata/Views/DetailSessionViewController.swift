@@ -26,92 +26,127 @@ class DetailSessionViewController: UIViewController {
         DetailTableView.dataSource = self
     }
     
-    private func showAlert(title : String, message: String, actionType: Int) {
+    func createField(alert: UIAlertController, placeholder: String, value: String) -> UIAlertController {
+ 
+        alert.addTextField { (textField:UITextField) in
+            textField.placeholder = placeholder
+            textField.returnKeyType = .continue
+            textField.text = value
+        }
         
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        return alert
+    }
+    
+    private func showAlert(fields : [Field], editMode: Bool, actionType: Int, index: Int? = nil) {
         
-            alert.addTextField { (textField:UITextField) in
-                if(actionType == 0) {
-                    textField.placeholder = "Nom"
+        
+        var alert = UIAlertController(title: "title", message: "message", preferredStyle: .alert)
+        
+        for field in fields {
+            alert = createField(alert: alert, placeholder: field.placeholder, value: field.value)
+        }
+        
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action:UIAlertAction) in
+              
+            guard let textFields = alert.textFields,
+                  textFields.count >= 2,
+                  let name = textFields.first?.text,
+                  let pay = textFields[1].text,
+                  let amount = Double(pay)
+            else {
+                return
+            }
+
+            
+            if(actionType == 0) {
+                if(editMode) {
+                    // update le field
+                    if let indexParticipant = index {
+                        self.session.participants[indexParticipant].name = name
+                        self.session.participants[indexParticipant].pay = amount
+                    }
+                   
                 } else {
-                    textField.placeholder = "Titre"
+                    let participant = Participant(name: name, pay: amount, owe: 0, percent: 0)
+                    self.session.participants.append(participant)
                 }
-                textField.returnKeyType = .continue
+
+                
+            } else {
+                
+                if(editMode) {
+                    if let indexParticipant = index {
+                        self.session.expenses[indexParticipant].title = name
+                        self.session.expenses[indexParticipant].amount = amount
+                    }
+                } else {
+                    let expense = Expense(title: name, amount: amount)
+                    self.session.expenses.append(expense)
+                }
             }
-            alert.addTextField { (textField:UITextField) in
-                textField.placeholder = "Apport"
-                textField.returnKeyType = .continue
-                textField.keyboardType = .decimalPad
+            
+            
+            if(!self.session.participants.isEmpty && !self.session.expenses.isEmpty) {
+                self.calculeProrata()
             }
+            
+            self.segmentControl.selectedSegmentIndex = actionType
+            self.DetailTableView.reloadData()
+        }))
+
+        
+        alert.addAction(UIAlertAction(title: "Annuler", style: .cancel, handler: nil))
+        self.present(alert, animated: true, completion: nil)
        
+        
                 
-                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action:UIAlertAction) in
-                      
-                    guard let textFields = alert.textFields,
-                          textFields.count >= 2,
-                          let name = textFields.first?.text,
-                          let pay = textFields[1].text,
-                          let amount = Double(pay)
-                    else {
-                        return
-                    }
-
-                    if(actionType == 0) {
-
-                        let participant = Participant(name: name, pay: amount, owe: 0, percent: 0)
-                        self.session.participants.append(participant)
-                    } else {
-                        let expense = Expense(title: name, amount: amount)
-                        self.session.expenses.append(expense)
-                    }
-                    if(self.session.participants.count > 0 && self.session.expenses.count > 0) {
-                        self.calculeProrata()
-                    }
-                    
-                    self.segmentControl.selectedSegmentIndex = actionType
-                    self.DetailTableView.reloadData()
-                }))
-
-                
-                alert.addAction(UIAlertAction(title: "Annuler", style: .cancel, handler: nil))
-                self.present(alert, animated: true, completion: nil)
      }
     
     func calculeProrata() {
-        
-        /*
-         diviser chaque salaire par le total des salaires des participants
-         multiplier le % par la somme total a payer et on a le resultat
-         */
-        
-        var sumPay : Double = 0
-        var sumExpense : Double = 0
-
-        for participant in session.participants {
-            // Je reccupère la somme de tout les salaires
-            sumPay += participant.pay
-        }
-        
-        for expense in session.expenses {
-            // Je reccupère la somme de toute les dépenses
-            sumExpense += expense.amount
-        }
-        
-        for participant in session.participants.indices {
-            session.participants[participant].percent = session.participants[participant].pay / sumPay
-            session.participants[participant].owe = session.participants[participant].percent * sumExpense
-            
+        for (index, item) in session.participants.enumerated() {
+            var participant = item
+            participant.percent = round(participant.pay / session.sumParticipants * 100) / 100.0
+            participant.owe = round(participant.percent * session.sumExpenses * 100) / 100.0
+            session.participants[index] = participant
         }
     }
-    
+     
     
     @IBAction func addParticipant(_ sender: Any) {
-        showAlert(title: "Titre", message: "Message", actionType: 0)
+        
+        let titleField = Field(placeholder: "Nom du participant", value: "")
+        let amountField = Field(placeholder: "Valeur", value: "")
+        let arrayOfFields = [titleField, amountField]
+
+        showAlert(fields: arrayOfFields, editMode: false, actionType: 0)
     }
     
     @IBAction func addExpense(_ sender: Any) {
-        showAlert(title: "Titre", message: "Message", actionType: 1)
+        
+        let titleField = Field(placeholder: "Nom de la dépense", value: "")
+        let amountField = Field(placeholder: "Valeur", value: "")
+        let arrayOfFields = [titleField, amountField]
+
+        showAlert(fields: arrayOfFields, editMode: false, actionType: 1)
+        
     }
+    
+    func editParticipant(value1: String, value2: String, index: Int){
+        let titleField = Field(placeholder: "Nom du participant", value: value1)
+        let amountField = Field(placeholder: "Valeur", value: value2)
+        let arrayOfFields = [titleField, amountField]
+
+        showAlert(fields: arrayOfFields, editMode: true, actionType: 0, index: index)
+    }
+    
+    func editExpense(value1: String, value2: String, index: Int) {
+        let titleField = Field(placeholder: "Nom de la dépense", value: value1)
+        let amountField = Field(placeholder: "Valeur", value: value2)
+        let arrayOfFields = [titleField, amountField]
+
+        showAlert(fields: arrayOfFields, editMode: true, actionType: 1, index: index)
+    }
+    
     
     @IBAction func segmentAction(_ sender: UISegmentedControl) {
         DetailTableView.reloadData()
@@ -146,13 +181,11 @@ extension DetailSessionViewController: UITableViewDelegate, UITableViewDataSourc
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if(segmentSelected == 0) {
-            print(session.participants[indexPath.item])
-            showAlert(title: "Titre", message: "Message", actionType: 0)
-            
+            let item = session.participants[indexPath.item]
+            editParticipant(value1: item.name, value2: String(item.pay), index: indexPath.item)
         } else {
-            showAlert(title: "Titre", message: "Message", actionType: 1)
-
-            print(session.expenses[indexPath.item])
+            let item = session.expenses[indexPath.item]
+            editExpense(value1: item.title, value2: String(item.amount), index: indexPath.item)
 
         }
     }

@@ -9,6 +9,12 @@ import Foundation
 
 struct Session {
     var participants: [Participant]
+    var sumParticipants: Double {
+        return participants.map({$0.pay}).reduce(0, +)
+    }
     var expenses: [Expense]
+    var sumExpenses: Double {
+        return expenses.map({$0.amount}).reduce(0, +)
+    }
     var title: String
 }
