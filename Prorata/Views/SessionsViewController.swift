@@ -49,7 +49,7 @@ class SessionsViewController: UIViewController {
         showAlert()
     }
     
-    
+   
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "detailpop" {
             if let destination = segue.destination as? DetailSessionViewController {
@@ -62,7 +62,6 @@ class SessionsViewController: UIViewController {
             }
         }
     }
-    
 }
 
 extension SessionsViewController: UITableViewDelegate, UITableViewDataSource {
@@ -81,4 +80,18 @@ extension SessionsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: "detailpop", sender: sessions[indexPath.item])
     }
+    
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .delete
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            sessionTableView.beginUpdates()
+            sessions.remove(at: indexPath.row)
+            sessionTableView.deleteRows(at: [indexPath], with: .fade)
+            sessionTableView.endUpdates()
+        }
+    }
+    
 }

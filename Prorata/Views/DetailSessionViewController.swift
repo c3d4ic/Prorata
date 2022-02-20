@@ -102,7 +102,7 @@ class DetailSessionViewController: UIViewController {
                 
      }
     
-    func calculeProrata() {
+    private func calculeProrata() {
         for (index, item) in session.participants.enumerated() {
             var participant = item
             participant.percent = round(participant.pay / session.sumParticipants * 100) / 100.0
@@ -131,7 +131,7 @@ class DetailSessionViewController: UIViewController {
         
     }
     
-    func editParticipant(value1: String, value2: String, index: Int){
+    private func editParticipant(value1: String, value2: String, index: Int){
         let titleField = Field(placeholder: "Nom du participant", value: value1)
         let amountField = Field(placeholder: "Valeur", value: value2)
         let arrayOfFields = [titleField, amountField]
@@ -139,7 +139,7 @@ class DetailSessionViewController: UIViewController {
         showAlert(fields: arrayOfFields, editMode: true, actionType: 0, index: index)
     }
     
-    func editExpense(value1: String, value2: String, index: Int) {
+    private func editExpense(value1: String, value2: String, index: Int) {
         let titleField = Field(placeholder: "Nom de la dépense", value: value1)
         let amountField = Field(placeholder: "Valeur", value: value2)
         let arrayOfFields = [titleField, amountField]
@@ -189,6 +189,28 @@ extension DetailSessionViewController: UITableViewDelegate, UITableViewDataSourc
 
         }
     }
+    
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .delete
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            DetailTableView.beginUpdates()
+            if(segmentSelected == 0) {
+                session.participants.remove(at: indexPath.row)
+            } else {
+                session.expenses.remove(at: indexPath.row)
+            }
+            DetailTableView.deleteRows(at: [indexPath], with: .fade)
+            self.calculeProrata()
+            self.DetailTableView.reloadData()
+            DetailTableView.endUpdates()
+        }
+    }
+  
+    
+  
 
 }
 
