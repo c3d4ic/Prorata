@@ -10,20 +10,20 @@ import UIKit
 class DetailSessionViewController: UIViewController {
 
     
-    @IBOutlet weak var DetailTableView: UITableView!
+    @IBOutlet weak var detailTableView: UITableView!
     
     @IBOutlet weak var segmentControl: UISegmentedControl!
     var segmentSelected : Int {
         return segmentControl.selectedSegmentIndex
     }
     
- 
-    var session: Session = .init(participants: [], expenses: [], title: "Demo")
+
+    var session: Session = Session(participants: [], expenses: [], title: "Demo")
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        DetailTableView.delegate = self
-        DetailTableView.dataSource = self
+        detailTableView.delegate = self
+        detailTableView.dataSource = self
     }
     
     func createField(alert: UIAlertController, placeholder: String, value: String) -> UIAlertController {
@@ -91,7 +91,7 @@ class DetailSessionViewController: UIViewController {
             }
             
             self.segmentControl.selectedSegmentIndex = actionType
-            self.DetailTableView.reloadData()
+            self.detailTableView.reloadData()
         }))
 
         
@@ -149,7 +149,7 @@ class DetailSessionViewController: UIViewController {
     
     
     @IBAction func segmentAction(_ sender: UISegmentedControl) {
-        DetailTableView.reloadData()
+        detailTableView.reloadData()
     }
 }
 
@@ -196,16 +196,16 @@ extension DetailSessionViewController: UITableViewDelegate, UITableViewDataSourc
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            DetailTableView.beginUpdates()
+            detailTableView.beginUpdates()
             if(segmentSelected == 0) {
                 session.participants.remove(at: indexPath.row)
             } else {
                 session.expenses.remove(at: indexPath.row)
             }
-            DetailTableView.deleteRows(at: [indexPath], with: .fade)
+            detailTableView.deleteRows(at: [indexPath], with: .fade)
             self.calculeProrata()
-            self.DetailTableView.reloadData()
-            DetailTableView.endUpdates()
+            self.detailTableView.reloadData()
+            detailTableView.endUpdates()
         }
     }
   
